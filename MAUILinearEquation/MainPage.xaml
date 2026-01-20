@@ -35,9 +35,9 @@
                         <Entry x:Name="AEntry"
                                    Placeholder="Значение коэффициента A"
                                    Keyboard="Numeric"
+                                   Text="{Binding CoefA}"
                                    ClearButtonVisibility="WhileEditing"
                                    TextColor="Gray"
-                                   TextChanged="AEntry_TextChanged"
                                    FontSize="18"/>
                     </VerticalStackLayout>
 
@@ -47,15 +47,15 @@
 
                     <!-- Поле коэфф В -->
                     <VerticalStackLayout Padding="20, 15" Spacing="5">
-                        <Label Text="Клоэффициент B" 
+                        <Label Text="Коэффициент B" 
                                    FontSize="18" 
                                    TextColor="Gray"/>
                         <Entry x:Name="BEntry"
                                    Placeholder="Значение коэффициента B"
                                    Keyboard="Numeric"
+                                   Text="{Binding CoefB}"
                                    ClearButtonVisibility="WhileEditing"
                                    TextColor="Gray"
-                                   TextChanged="AEntry_TextChanged"
                                    FontSize="18"/>
                     </VerticalStackLayout>
 
@@ -77,7 +77,7 @@
                         Padding="0">
                 <VerticalStackLayout Spacing="20">
 
-                    <Label Text=""
+                    <Label Text="{Binding Result}}"
                             x:Name="AnswerLabel"
                             FontSize="32"
                             FontAttributes="Bold"
@@ -90,16 +90,15 @@
         <VerticalStackLayout Spacing="15" Grid.Row="2">
             <Button x:Name="SolveButton"
                             Text="РЕШИТЬ"
-                            BackgroundColor="Gray"
                             TextColor="White"
                             CornerRadius="10"
                             HeightRequest="52"
                             WidthRequest="256"
                             FontSize="16"
                             FontAttributes="Bold"
-                            IsEnabled="False"
+                            Command="{Binding SolveCommand}"
                     
-                            Clicked="OnSolveButtonClicked"/>
+                            />
         </VerticalStackLayout>
     </Grid>
 
