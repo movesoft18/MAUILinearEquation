@@ -62,6 +62,7 @@ namespace MAUILinearEquation.ViewModel
                 {
                     data.IsValidA = value;
                     OnPropertyChanged();
+                    OnPropertyChanged(nameof(IsValidBoth)); // Уведомляем об изменении IsValidBoth
                 }
             }
         }
@@ -74,9 +75,24 @@ namespace MAUILinearEquation.ViewModel
                 {
                     data.IsValidB = value;
                     OnPropertyChanged();
+                    OnPropertyChanged(nameof(IsValidBoth)); // Уведомляем об изменении IsValidBoth
                 }
             }
         }
+
+        //private bool _isValid = false;
+        public bool IsValidBoth 
+        {
+           get => IsAValid && IsBValid;
+           //set
+           // {
+           //     if (_isValid != value)
+           //     {
+           //         _isValid = value;
+           //         OnPropertyChanged();
+           //     }
+           // }
+        } 
 
         public LinearEquationViewModel()
         {

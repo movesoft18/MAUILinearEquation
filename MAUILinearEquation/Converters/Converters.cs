@@ -32,10 +32,8 @@ namespace MAUILinearEquation.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            bool isValidA = (bool)value;
-            bool isValidB = parameter is bool ? (bool)parameter : false;
-
-            return isValidA && isValidB ? "LightBlue" : "LightGray";
+            bool isValid = (bool)value;
+            return isValid ? "LightBlue" : "LightGray";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

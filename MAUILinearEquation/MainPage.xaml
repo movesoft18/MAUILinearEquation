@@ -106,7 +106,7 @@
         <!-- Кнопка -->
         <VerticalStackLayout Spacing="15" Grid.Row="2">
             <Button Text="РЕШИТЬ"
-                    BackgroundColor="{Binding IsAValid, Converter={StaticResource BoolToButtonColorConverter}, ConverterParameter={Binding IsBValid}}"
+                    BackgroundColor="{Binding IsValidBoth, Converter={StaticResource BoolToButtonColorConverter}}"
                     TextColor="White"
                     CornerRadius="10"
                     HeightRequest="52"
