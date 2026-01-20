@@ -11,7 +11,7 @@ namespace MAUILinearEquation.Models
         public string CoefA { get; set; } = "";
         public string CoefB { get; set; } = "";
         public string Result { get; set; } = "";
-        //public bool IsValidA { get; set; } = false;
-        //public bool IsValidB { get; set; } = false;
+        public bool IsValidA { get; set; } = false;
+        public bool IsValidB { get; set; } = false;
     }
 }

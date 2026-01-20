@@ -22,7 +22,7 @@ namespace MAUILinearEquation.ViewModel
                 {
                     data.CoefA = value;
                     OnPropertyChanged();
-                    //ValidateA();
+                    ValidateA();
                 }
             }
         }
@@ -35,7 +35,7 @@ namespace MAUILinearEquation.ViewModel
                 {
                     data.CoefB = value;
                     OnPropertyChanged();
-                    //ValidateB();
+                    ValidateB();
                 }
             }
         }
@@ -53,30 +53,30 @@ namespace MAUILinearEquation.ViewModel
                 }
             }
         }
-        //public bool IsAValid
-        //{
-        //    get => data.IsValidA;
-        //    set
-        //    {
-        //        if (data.IsValidA != value)
-        //        {
-        //            data.IsValidA = value;
-        //            OnPropertyChanged();
-        //        }
-        //    }
-        //}
-        //public bool IsBValid
-        //{
-        //    get => data.IsValidB;
-        //    set
-        //    {
-        //        if (data.IsValidB != value)
-        //        {
-        //            data.IsValidB = value;
-        //            OnPropertyChanged();
-        //        }
-        //    }
-        //}
+        public bool IsAValid
+        {
+            get => data.IsValidA;
+            set
+            {
+                if (data.IsValidA != value)
+                {
+                    data.IsValidA = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public bool IsBValid
+        {
+            get => data.IsValidB;
+            set
+            {
+                if (data.IsValidB != value)
+                {
+                    data.IsValidB = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public LinearEquationViewModel()
         {
@@ -105,33 +105,29 @@ namespace MAUILinearEquation.ViewModel
             },
             () =>
             {
-                //return IsAValid && IsBValid;
-                return 
-                    Double.TryParse(CoefA, CultureInfo.InvariantCulture, out _) &&
-                    Double.TryParse(CoefB, CultureInfo.InvariantCulture, out _);
+                return IsAValid && IsBValid;
             });
         }
 
-        //private void ValidateA()
-        //{
-        //    IsAValid = double.TryParse(CoefA,
-        //        NumberStyles.Any,
-        //        CultureInfo.InvariantCulture,
-        //        out _);
-        //}
+        private void ValidateA()
+        {
+            IsAValid = double.TryParse(CoefA,
+                NumberStyles.Any,
+                CultureInfo.InvariantCulture,
+                out _);
+        }
 
-        //private void ValidateB()
-        //{
-        //    IsBValid = double.TryParse(CoefB,
-        //        NumberStyles.Any,
-        //        CultureInfo.InvariantCulture,
-        //        out _);
-        //}
+        private void ValidateB()
+        {
+            IsBValid = double.TryParse(CoefB,
+                NumberStyles.Any,
+                CultureInfo.InvariantCulture,
+                out _);
+        }
         public void OnPropertyChanged([CallerMemberName] string prop = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
             if (SolveCommand is Command command) command.ChangeCanExecute();
-            //((Command)SolveCommand).ChangeCanExecute();
         }
     }
 }

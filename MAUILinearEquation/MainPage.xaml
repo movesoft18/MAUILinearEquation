@@ -1,106 +1,120 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MAUILinearEquation.MainPage">
+             x:Class="MAUILinearEquation.MainPage"
+             xmlns:converters="clr-namespace:MAUILinearEquation.Converters"
+             Title="Решение линейного уравнения">
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:BoolToColorConverter x:Key="BoolToColorConverter"/>
+            <converters:BoolToInverseConverter x:Key="BoolToInverseConverter"/>
+            <converters:BoolToButtonColorConverter x:Key="BoolToButtonColorConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
 
-        <Grid RowDefinitions="Auto, *, Auto"
-              RowSpacing="20"
-              Padding="30, 20, 30, 20">
+    <Grid RowDefinitions="Auto, *, Auto"
+          RowSpacing="20"
+          Padding="30, 20, 30, 20">
 
-            <Label Text="Линейное уравнение вида ax + b = 0"
-                   FontSize="24"
-                   FontAttributes="Bold"
-                   HorizontalOptions="Center"
-                   HorizontalTextAlignment="Center"
-                   TextColor="BlueViolet"
-                   Grid.Row="0"/>
+        <!-- Заголовок -->
+        <Label Text="Линейное уравнение вида&#10;ax + b = 0"
+               FontSize="24"
+               FontAttributes="Bold"
+               HorizontalOptions="Center"
+               HorizontalTextAlignment="Center"
+               TextColor="BlueViolet"
+               Grid.Row="0"/>
 
+        <!-- Основное содержимое -->
         <VerticalStackLayout Spacing="20" Grid.Row="1">
 
             <!-- Контейнер для полей ввода коэффициентов -->
             <Border Stroke="#E0E0E0"
-                        StrokeThickness="1"
-                        StrokeShape="RoundRectangle 12"
-                        BackgroundColor="White"
-                        Padding="0">
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 12"
+                    BackgroundColor="White"
+                    Padding="0">
 
                 <VerticalStackLayout Spacing="0">
 
                     <!-- Поле коэфф А -->
                     <VerticalStackLayout Padding="20, 15" Spacing="5">
                         <Label Text="Коэффициент А" 
-                                   FontSize="18" 
-                                   TextColor="Gray"/>
-                        <Entry x:Name="AEntry"
-                                   Placeholder="Значение коэффициента A"
-                                   Keyboard="Numeric"
-                                   Text="{Binding CoefA}"
-                                   ClearButtonVisibility="WhileEditing"
-                                   TextColor="Gray"
-                                   FontSize="18"/>
+                               FontSize="18" 
+                               TextColor="Gray"/>
+                        <Entry Placeholder="Введите число"
+                               Keyboard="Numeric"
+                               Text="{Binding CoefA}"
+                               ClearButtonVisibility="WhileEditing"
+                               TextColor="{Binding IsAValid, Converter={StaticResource BoolToColorConverter}}"
+                               FontSize="18"/>
+                        <Label Text="Неверный формат числа"
+                               TextColor="Red"
+                               FontSize="14"
+                               IsVisible="{Binding IsAValid, Converter={StaticResource BoolToInverseConverter}}"/>
                     </VerticalStackLayout>
 
                     <!-- Разделитель между полями -->
                     <BoxView HeightRequest="1" 
-                                 BackgroundColor="#DDDDDD"/>
+                             BackgroundColor="#DDDDDD"/>
 
                     <!-- Поле коэфф В -->
                     <VerticalStackLayout Padding="20, 15" Spacing="5">
                         <Label Text="Коэффициент B" 
-                                   FontSize="18" 
-                                   TextColor="Gray"/>
-                        <Entry x:Name="BEntry"
-                                   Placeholder="Значение коэффициента B"
-                                   Keyboard="Numeric"
-                                   Text="{Binding CoefB}"
-                                   ClearButtonVisibility="WhileEditing"
-                                   TextColor="Gray"
-                                   FontSize="18"/>
+                               FontSize="18" 
+                               TextColor="Gray"/>
+                        <Entry Placeholder="Введите число"
+                               Keyboard="Numeric"
+                               Text="{Binding CoefB}"
+                               ClearButtonVisibility="WhileEditing"
+                               TextColor="{Binding IsBValid, Converter={StaticResource BoolToColorConverter}}"
+                               FontSize="18"/>
+                        <Label Text="Неверный формат числа"
+                               TextColor="Red"
+                               FontSize="14"
+                               IsVisible="{Binding IsBValid, Converter={StaticResource BoolToInverseConverter}}"/>
                     </VerticalStackLayout>
 
                 </VerticalStackLayout>
             </Border>
 
+            <!-- Заголовок "Ответ" -->
             <Label Text="Ответ"
                    FontSize="24"
                    FontAttributes="Bold"
                    HorizontalOptions="Center"
-                   TextColor="White"
-                   IsVisible="True"
-                   Grid.Row="0"/>
+                   TextColor="BlueViolet"/>
 
+            <!-- Контейнер для результата -->
             <Border Stroke="#E0E0E0"
-                        StrokeThickness="1"
-                        StrokeShape="RoundRectangle 12"
-                        BackgroundColor="White"
-                        Padding="0">
-                <VerticalStackLayout Spacing="20">
-
-                    <Label Text="{Binding Result}}"
-                            x:Name="AnswerLabel"
-                            FontSize="32"
-                            FontAttributes="Bold"
-                            HorizontalOptions="Center"
-                            TextColor="#512BD4"
-                            Grid.Row="0"/>
-                </VerticalStackLayout>
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 12"
+                    BackgroundColor="White"
+                    Padding="20">
+                <Label Text="{Binding Result}"
+                       FontSize="32"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       HorizontalTextAlignment="Center"
+                       TextColor="#512BD4"/>
             </Border>
         </VerticalStackLayout>
+
+        <!-- Кнопка -->
         <VerticalStackLayout Spacing="15" Grid.Row="2">
-            <Button x:Name="SolveButton"
-                            Text="РЕШИТЬ"
-                            TextColor="White"
-                            CornerRadius="10"
-                            HeightRequest="52"
-                            WidthRequest="256"
-                            FontSize="16"
-                            FontAttributes="Bold"
-                            Command="{Binding SolveCommand}"
-                    
-                            />
+            <Button Text="РЕШИТЬ"
+                    BackgroundColor="{Binding IsAValid, Converter={StaticResource BoolToButtonColorConverter}, ConverterParameter={Binding IsBValid}}"
+                    TextColor="White"
+                    CornerRadius="10"
+                    HeightRequest="52"
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    HorizontalOptions="Center"
+                    WidthRequest="256"
+                    Command="{Binding SolveCommand}"/>
         </VerticalStackLayout>
     </Grid>
-
-
 </ContentPage>
