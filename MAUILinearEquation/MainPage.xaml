@@ -3,62 +3,54 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MAUILinearEquation.MainPage">
 
+    <Grid
+        RowDefinitions="Auto, *, Auto"
+        RowSpacing="20"
+        Padding="30, 20">
 
-        <Grid RowDefinitions="Auto, *, Auto"
-              RowSpacing="20"
-              Padding="30, 20, 30, 20">
-
-            <Label Text="Линейное уравнение вида ax + b = 0"
-                   FontSize="24"
-                   FontAttributes="Bold"
-                   HorizontalOptions="Center"
-                   HorizontalTextAlignment="Center"
-                   TextColor="BlueViolet"
-                   Grid.Row="0"/>
-
+        <Label 
+            Text="Линейное уравнение вида ax + b = 0"
+            FontSize="24"
+            FontAttributes="Bold"
+            HorizontalOptions="Center"
+            HorizontalTextAlignment="Center"
+            TextColor="BlueViolet"
+            Grid.Row="0"/>
         <VerticalStackLayout Spacing="20" Grid.Row="1">
-
-            <!-- Контейнер для полей ввода коэффициентов -->
-            <Border Stroke="#E0E0E0"
-                        StrokeThickness="1"
-                        StrokeShape="RoundRectangle 12"
-                        BackgroundColor="White"
-                        Padding="0">
-
-                <VerticalStackLayout Spacing="0">
-
-                    <!-- Поле коэфф А -->
-                    <VerticalStackLayout Padding="20, 15" Spacing="5">
-                        <Label Text="Коэффициент А" 
+            <Border Stroke="#909090"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 12"
+                    BackgroundColor="White"
+                    Padding="0">
+                <VerticalStackLayout Padding="20, 15" Spacing="5">
+                    <!-- Поле ввода А -->
+                    <Label Text="Коэффициент А" 
                                    FontSize="18" 
                                    TextColor="Gray"/>
-                        <Entry x:Name="AEntry"
-                                   Placeholder="Значение коэффициента A"
+                    <Entry x:Name="AEntry"
+                                   Placeholder="Введите коэффициент A"
                                    Keyboard="Numeric"
                                    ClearButtonVisibility="WhileEditing"
                                    TextColor="Gray"
                                    TextChanged="AEntry_TextChanged"
                                    FontSize="18"/>
-                    </VerticalStackLayout>
 
                     <!-- Разделитель между полями -->
-                    <BoxView HeightRequest="1" 
-                                 BackgroundColor="#DDDDDD"/>
+                    <BoxView HeightRequest="1"
+                             Margin="0, 20"
+                             BackgroundColor="#DDDDDD"/>
 
-                    <!-- Поле коэфф В -->
-                    <VerticalStackLayout Padding="20, 15" Spacing="5">
-                        <Label Text="Клоэффициент B" 
+                    <!-- Поле ввода B -->
+                    <Label Text="Коэффициент B" 
                                    FontSize="18" 
                                    TextColor="Gray"/>
-                        <Entry x:Name="BEntry"
-                                   Placeholder="Значение коэффициента B"
+                    <Entry x:Name="BEntry"
+                                   Placeholder="Введите коэффициент B"
                                    Keyboard="Numeric"
                                    ClearButtonVisibility="WhileEditing"
                                    TextColor="Gray"
-                                   TextChanged="AEntry_TextChanged"
+                                   TextChanged="BEntry_TextChanged"
                                    FontSize="18"/>
-                    </VerticalStackLayout>
-
                 </VerticalStackLayout>
             </Border>
 
@@ -66,42 +58,36 @@
                    FontSize="24"
                    FontAttributes="Bold"
                    HorizontalOptions="Center"
-                   TextColor="White"
-                   IsVisible="True"
-                   Grid.Row="0"/>
+                   TextColor="Gray"
+                   IsVisible="True"/>
 
-            <Border Stroke="#E0E0E0"
+            <Border Stroke="#909090"
                         StrokeThickness="1"
                         StrokeShape="RoundRectangle 12"
                         BackgroundColor="White"
                         Padding="0">
-                <VerticalStackLayout Spacing="20">
 
-                    <Label Text=""
+                <Label Text=""
                             x:Name="AnswerLabel"
                             FontSize="32"
                             FontAttributes="Bold"
                             HorizontalOptions="Center"
-                            TextColor="#512BD4"
-                            Grid.Row="0"/>
-                </VerticalStackLayout>
+                            TextColor="#512BD4"/>
             </Border>
         </VerticalStackLayout>
         <VerticalStackLayout Spacing="15" Grid.Row="2">
             <Button x:Name="SolveButton"
-                            Text="РЕШИТЬ"
-                            BackgroundColor="Gray"
-                            TextColor="White"
-                            CornerRadius="10"
-                            HeightRequest="52"
-                            WidthRequest="256"
-                            FontSize="16"
-                            FontAttributes="Bold"
-                            IsEnabled="False"
-                    
-                            Clicked="OnSolveButtonClicked"/>
+                    Text="РЕШИТЬ"
+                    BackgroundColor="Gray"
+                    TextColor="White"
+                    CornerRadius="10"
+                    HeightRequest="52"
+                    WidthRequest="256"
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    IsEnabled="False"
+                    Clicked="OnSolveButtonClicked"/>
+
         </VerticalStackLayout>
     </Grid>
-
-
 </ContentPage>

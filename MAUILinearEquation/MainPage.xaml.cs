@@ -1,19 +1,27 @@
-﻿namespace MAUILinearEquation
+﻿using System.Runtime.CompilerServices;
+
+namespace MAUILinearEquation
 {
     public partial class MainPage : ContentPage
     {
-        public bool isAValid 
-        { 
-            get 
-            {
-                return Double.TryParse(AEntry.Text, out double a);
-            }
-        }
-        public bool isBValid 
+        public bool IsAValid
         {
             get
             {
-                return Double.TryParse(BEntry.Text, out double b);
+                return Double.TryParse(
+                    AEntry.Text,
+                    System.Globalization.CultureInfo.InvariantCulture,
+                    out double a);
+            }
+        }
+        public bool IsBValid
+        {
+            get
+            {
+                return Double.TryParse(
+                    BEntry.Text,
+                    System.Globalization.CultureInfo.InvariantCulture,
+                    out double a);
             }
         }
 
@@ -24,8 +32,14 @@
 
         private void OnSolveButtonClicked(object sender, EventArgs e)
         {
-            Double.TryParse(AEntry.Text, out double a);
-            Double.TryParse(BEntry.Text, out double b);
+            Double.TryParse(
+                    AEntry.Text,
+                    System.Globalization.CultureInfo.InvariantCulture,
+                    out double a);
+            Double.TryParse(
+                    BEntry.Text,
+                    System.Globalization.CultureInfo.InvariantCulture,
+                    out double b);
             var (result, roots) = Classes.LinearEquationSolver.Solve(a, b);
             switch (roots)
             {
@@ -41,9 +55,9 @@
             }
         }
 
-        private void AEntry_TextChanged(object sender, TextChangedEventArgs e)
+        private void EnableOrDisableSolveButton()
         {
-            SolveButton.IsEnabled = isAValid && isBValid;
+            SolveButton.IsEnabled = IsAValid && IsBValid;
             if (SolveButton.IsEnabled)
             {
                 SolveButton.BackgroundColor = Colors.BlueViolet;
@@ -54,9 +68,34 @@
             }
         }
 
-        private void AEntry_Completed(object sender, EventArgs e)
+        private void MarkError(Entry entry, bool isValid)
         {
-            var a  = 3 + 4;
+            if (!isValid && !string.IsNullOrEmpty(entry.Text))
+            {
+                entry.BackgroundColor = Colors.Pink;
+            }
+            else
+            {
+                entry.BackgroundColor = Colors.White;
+            }
+        }
+
+        private void AEntry_TextChanged(object sender, EventArgs e)
+        {
+            EnableOrDisableSolveButton();
+            if (sender is Entry entry)
+            {
+                MarkError(entry, IsAValid);
+            }
+        }
+
+        private void BEntry_TextChanged(object sender, EventArgs e)
+        {
+            EnableOrDisableSolveButton();
+            if (sender is Entry entry)
+            {
+                MarkError(entry, IsBValid);
+            }
         }
     }
 }
