@@ -68,15 +68,17 @@ namespace MAUILinearEquation
             }
         }
 
-        private void MarkError(Entry entry, bool isValid)
+        private void MarkError(Entry entry, Label label, bool isValid)
         {
             if (!isValid && !string.IsNullOrEmpty(entry.Text))
             {
                 entry.BackgroundColor = Colors.Pink;
+                label.IsVisible = true;
             }
             else
             {
                 entry.BackgroundColor = Colors.White;
+                label.IsVisible = false;
             }
         }
 
@@ -85,7 +87,7 @@ namespace MAUILinearEquation
             EnableOrDisableSolveButton();
             if (sender is Entry entry)
             {
-                MarkError(entry, IsAValid);
+                MarkError(entry, ErrorA, IsAValid);
             }
         }
 
@@ -94,7 +96,7 @@ namespace MAUILinearEquation
             EnableOrDisableSolveButton();
             if (sender is Entry entry)
             {
-                MarkError(entry, IsBValid);
+                MarkError(entry, ErrorB, IsBValid);
             }
         }
     }
