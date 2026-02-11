@@ -10,7 +10,6 @@ namespace MAUILinearEquation
             {
                 return Double.TryParse(
                     AEntry.Text,
-                    System.Globalization.CultureInfo.InvariantCulture,
                     out double a);
             }
         }
@@ -20,7 +19,6 @@ namespace MAUILinearEquation
             {
                 return Double.TryParse(
                     BEntry.Text,
-                    System.Globalization.CultureInfo.InvariantCulture,
                     out double a);
             }
         }
@@ -34,11 +32,9 @@ namespace MAUILinearEquation
         {
             Double.TryParse(
                     AEntry.Text,
-                    System.Globalization.CultureInfo.InvariantCulture,
                     out double a);
             Double.TryParse(
                     BEntry.Text,
-                    System.Globalization.CultureInfo.InvariantCulture,
                     out double b);
             var (result, roots) = Classes.LinearEquationSolver.Solve(a, b);
             switch (roots)
