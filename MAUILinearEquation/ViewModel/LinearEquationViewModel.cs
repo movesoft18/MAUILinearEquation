@@ -1,4 +1,5 @@
-﻿using MAUILinearEquation.Models;
+﻿using MAUILinearEquation.Classes;
+using MAUILinearEquation.Models;
 using System.ComponentModel;
 using System.Globalization;
 using System.Runtime.CompilerServices;
@@ -84,31 +85,34 @@ namespace MAUILinearEquation.ViewModel
             {
                 double a, b;
                 if (
-                    Double.TryParse(CoefA, CultureInfo.InvariantCulture, out a) &&
-                    Double.TryParse(CoefB, CultureInfo.InvariantCulture, out b))
+                    Double.TryParse(CoefA, out a) &&
+                    Double.TryParse(CoefB, out b))
                 {
+                    var (root, count) = Classes.LinearEquationSolver.Solve(a, b);
                     // Логика решения линейного уравнения
-                    if (a == 0)
+                    switch (count)
                     {
-                        if (b == 0)
-                            Result = "Бесконечное множество решений";
-                        else
+                        case 0:
                             Result = "Нет решений";
-                    }
-                    else
-                    {
-                        double solution = -b / a;
-                        Result = $"x = {solution:F2}";
+                            break;
+                        case 1:
+                            Result = $"x = {root:F10}";
+                            break;
+                        case 2:
+                            Result = "Бесконечное множество решений";
+                            break;
+                        default:
+                            Result = "Ошибка";
+                            break;
                     }
                 }
-                else Result = "Ошибка";
             },
             () =>
             {
                 //return IsAValid && IsBValid;
                 return 
-                    Double.TryParse(CoefA, CultureInfo.InvariantCulture, out _) &&
-                    Double.TryParse(CoefB, CultureInfo.InvariantCulture, out _);
+                    Double.TryParse(CoefA, out _) &&
+                    Double.TryParse(CoefB, out _);
             });
         }
 
