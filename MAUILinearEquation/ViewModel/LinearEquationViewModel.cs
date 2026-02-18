@@ -80,18 +80,10 @@ namespace MAUILinearEquation.ViewModel
             }
         }
 
-        //private bool _isValid = false;
         public bool IsValidBoth 
         {
            get => IsAValid && IsBValid;
-           //set
-           // {
-           //     if (_isValid != value)
-           //     {
-           //         _isValid = value;
-           //         OnPropertyChanged();
-           //     }
-           // }
+
         } 
 
         public LinearEquationViewModel()
@@ -100,8 +92,8 @@ namespace MAUILinearEquation.ViewModel
             {
                 double a, b;
                 if (
-                    Double.TryParse(CoefA, CultureInfo.InvariantCulture, out a) &&
-                    Double.TryParse(CoefB, CultureInfo.InvariantCulture, out b))
+                    Double.TryParse(CoefA, out a) &&
+                    Double.TryParse(CoefB, out b))
                 {
                     // Логика решения линейного уравнения
                     if (a == 0)
@@ -127,18 +119,12 @@ namespace MAUILinearEquation.ViewModel
 
         private void ValidateA()
         {
-            IsAValid = double.TryParse(CoefA,
-                NumberStyles.Any,
-                CultureInfo.InvariantCulture,
-                out _);
+            IsAValid = double.TryParse(CoefA,out _);
         }
 
         private void ValidateB()
         {
-            IsBValid = double.TryParse(CoefB,
-                NumberStyles.Any,
-                CultureInfo.InvariantCulture,
-                out _);
+            IsBValid = double.TryParse(CoefB,out _);
         }
         public void OnPropertyChanged([CallerMemberName] string prop = "")
         {
