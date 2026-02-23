@@ -1,135 +1,68 @@
-﻿using MAUILinearEquation.Models;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Globalization;
 using System.Runtime.CompilerServices;
-using System.Windows.Input;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 
 namespace MAUILinearEquation.ViewModel
 {
-    public class LinearEquationViewModel : INotifyPropertyChanged
+    public partial class LinearEquationViewModel : ObservableObject
     {
-        LinearEquationData data = new();
-        public event PropertyChangedEventHandler? PropertyChanged;
-        public ICommand SolveCommand { get; set; }
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(SolveCommand))]
+        [NotifyPropertyChangedFor(nameof(CanSolve))]
+        private string _coefA;
 
-        public string CoefA
-        {
-            get => data.CoefA;
-            set
-            {
-                if (data.CoefA != value)
-                {
-                    data.CoefA = value;
-                    OnPropertyChanged();
-                    ValidateA();
-                }
-            }
-        }
-        public string CoefB
-        {
-            get => data.CoefB;
-            set
-            {
-                if (data.CoefB != value)
-                {
-                    data.CoefB = value;
-                    OnPropertyChanged();
-                    ValidateB();
-                }
-            }
-        }
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(SolveCommand))]
+        [NotifyPropertyChangedFor(nameof(CanSolve))]
+        private string _coefB;
 
-        public string Result
-        {
-            get => data.Result;
-            set
-            {
-                if (data.Result != value)
-                {
+        [ObservableProperty]
+        private string _result;
 
-                    data.Result = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-        public bool IsAValid
+        [ObservableProperty]
+        private bool _isAValid;
+
+        [ObservableProperty]
+        private bool _isBValid;
+
+        [ObservableProperty]
+        private List<string> _isAAA = new List<string> { "invalidValue"};
+
+        public bool CanSolve => CanPressSolveButton();
+
+        [RelayCommand(CanExecute = nameof(CanPressSolveButton))]
+        private void Solve()
         {
-            get => data.IsValidA;
-            set
+            Double.TryParse(CoefA, out double a);
+            Double.TryParse(CoefB, out double b);
+            var (root, count) = Classes.LinearEquationSolver.Solve(a, b);
+            switch (count)
             {
-                if (data.IsValidA != value)
-                {
-                    data.IsValidA = value;
-                    OnPropertyChanged();
-                    OnPropertyChanged(nameof(IsValidBoth)); // Уведомляем об изменении IsValidBoth
-                }
-            }
-        }
-        public bool IsBValid
-        {
-            get => data.IsValidB;
-            set
-            {
-                if (data.IsValidB != value)
-                {
-                    data.IsValidB = value;
-                    OnPropertyChanged();
-                    OnPropertyChanged(nameof(IsValidBoth)); // Уведомляем об изменении IsValidBoth
-                }
+                case 0:
+                    Result = $"Корней нет";
+                    break;
+                case 1:
+                    Result = $"x = {root.ToString()}";
+                    break;
+                case 2:
+                    Result = $"Бесконечное множество решений";
+                    break;
+                default:
+                    Result = $"ОШИБКА";
+                    break;
+
             }
         }
 
-        public bool IsValidBoth 
+        private bool CanPressSolveButton()
         {
-           get => IsAValid && IsBValid;
-
-        } 
-
-        public LinearEquationViewModel()
-        {
-            SolveCommand = new Command(() =>
-            {
-                double a, b;
-                if (
-                    Double.TryParse(CoefA, out a) &&
-                    Double.TryParse(CoefB, out b))
-                {
-                    // Логика решения линейного уравнения
-                    if (a == 0)
-                    {
-                        if (b == 0)
-                            Result = "Бесконечное множество решений";
-                        else
-                            Result = "Нет решений";
-                    }
-                    else
-                    {
-                        double solution = -b / a;
-                        Result = $"x = {solution:F2}";
-                    }
-                }
-                else Result = "Ошибка";
-            },
-            () =>
-            {
-                return IsAValid && IsBValid;
-            });
+            IsAValid = Double.TryParse(CoefA, out _);
+            IsBValid = Double.TryParse(CoefB, out _);
+            return IsAValid && IsBValid;
         }
 
-        private void ValidateA()
-        {
-            IsAValid = double.TryParse(CoefA,out _);
-        }
-
-        private void ValidateB()
-        {
-            IsBValid = double.TryParse(CoefB,out _);
-        }
-        public void OnPropertyChanged([CallerMemberName] string prop = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
-            if (SolveCommand is Command command) command.ChangeCanExecute();
-        }
     }
 }

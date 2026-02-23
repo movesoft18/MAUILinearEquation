@@ -41,4 +41,23 @@ namespace MAUILinearEquation.Converters
             throw new NotImplementedException();
         }
     }
+
+    public class StatusToClassConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            System.Diagnostics.Debug.WriteLine($"Target type: {targetType}");
+            // Если value не bool или null - возвращаем пустую строку (без стиля)
+            if (value is not bool isValid)
+                return string.Empty;
+
+            // Возвращаем имя CSS класса
+            return isValid ? "validValue" : "invalidValue";
+        }
+
+        public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

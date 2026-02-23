@@ -4,15 +4,16 @@
              x:Class="MAUILinearEquation.MainPage"
              xmlns:converters="clr-namespace:MAUILinearEquation.Converters"
              Title="Решение линейного уравнения">
-    
+
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:BoolToColorConverter x:Key="BoolToColorConverter"/>
             <converters:BoolToInverseConverter x:Key="BoolToInverseConverter"/>
             <converters:BoolToButtonColorConverter x:Key="BoolToButtonColorConverter"/>
+            <converters:StatusToClassConverter x:Key="StatusToClassConverter"/>
         </ResourceDictionary>
+        <StyleSheet Source="/Resources/Styles/mystyles.css" />
     </ContentPage.Resources>
-
 
     <Grid RowDefinitions="Auto, *, Auto"
           RowSpacing="20"
@@ -48,7 +49,6 @@
                                Keyboard="Numeric"
                                Text="{Binding CoefA}"
                                ClearButtonVisibility="WhileEditing"
-                               TextColor="{Binding IsAValid, Converter={StaticResource BoolToColorConverter}}"
                                FontSize="18"/>
                         <Label Text="Неверный формат числа"
                                TextColor="Red"
@@ -69,8 +69,8 @@
                                Keyboard="Numeric"
                                Text="{Binding CoefB}"
                                ClearButtonVisibility="WhileEditing"
-                               TextColor="{Binding IsBValid, Converter={StaticResource BoolToColorConverter}}"
-                               FontSize="18"/>
+                               StyleClass="{Binding IsAAA}"
+                               />
                         <Label Text="Неверный формат числа"
                                TextColor="Red"
                                FontSize="14"
@@ -106,7 +106,7 @@
         <!-- Кнопка -->
         <VerticalStackLayout Spacing="15" Grid.Row="2">
             <Button Text="РЕШИТЬ"
-                    BackgroundColor="{Binding IsValidBoth, Converter={StaticResource BoolToButtonColorConverter}}"
+                   
                     TextColor="White"
                     CornerRadius="10"
                     HeightRequest="52"

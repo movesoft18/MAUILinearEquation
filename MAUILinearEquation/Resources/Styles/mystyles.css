@@ -1,0 +1,11 @@
+﻿.invalidValue {
+    font-size: 18;
+    color: red;
+    background-color:pink;
+}
+
+.validValue {
+    font-size: 18;
+    color: gray;
+    background-color: white;
+}
