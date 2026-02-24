@@ -49,6 +49,7 @@
                                Keyboard="Numeric"
                                Text="{Binding CoefA}"
                                ClearButtonVisibility="WhileEditing"
+                               TextColor="{Binding IsAValid, Converter={StaticResource BoolToInverseConverter}}"
                                FontSize="18"/>
                         <Label Text="Неверный формат числа"
                                TextColor="Red"
@@ -69,7 +70,7 @@
                                Keyboard="Numeric"
                                Text="{Binding CoefB}"
                                ClearButtonVisibility="WhileEditing"
-                               StyleClass="{Binding IsAAA}"
+                               TextColor="{Binding IsAValid, Converter={StaticResource BoolToInverseConverter}}"
                                />
                         <Label Text="Неверный формат числа"
                                TextColor="Red"

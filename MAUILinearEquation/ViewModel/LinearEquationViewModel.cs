@@ -11,12 +11,10 @@ namespace MAUILinearEquation.ViewModel
     {
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(SolveCommand))]
-        [NotifyPropertyChangedFor(nameof(CanSolve))]
         private string _coefA;
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(SolveCommand))]
-        [NotifyPropertyChangedFor(nameof(CanSolve))]
         private string _coefB;
 
         [ObservableProperty]
@@ -28,10 +26,8 @@ namespace MAUILinearEquation.ViewModel
         [ObservableProperty]
         private bool _isBValid;
 
-        [ObservableProperty]
-        private List<string> _isAAA = new List<string> { "invalidValue"};
-
-        public bool CanSolve => CanPressSolveButton();
+        //[ObservableProperty]
+        //private List<string> _isAAA = new List<string> { "invalidValue"};
 
         [RelayCommand(CanExecute = nameof(CanPressSolveButton))]
         private void Solve()
